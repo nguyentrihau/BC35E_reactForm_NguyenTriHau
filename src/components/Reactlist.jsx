@@ -7,10 +7,11 @@ class Reactlist extends Component {
         keyword:'',
     }
     renderSinhVien = () => {
-        // console.log(this.props.arrSinhVien);
+        console.log(this.props.arrSinhVien.userList);
         let data = this.props.arrSinhVien.userList.filter(e => {
             return e.hoTen.toLowerCase().trim().indexOf(this.state.keyword.toLowerCase().trim()) !== - 1
         })
+    
         return data.map((sinhvien, index) => {
             return (
                 <tr key={index}>
@@ -21,7 +22,7 @@ class Reactlist extends Component {
                     <td>
                         <button className="btn btn-info mr-2" onClick={()=>{
                             const action = {
-                                type:'EDIT_USER',
+                                type:'SELECTED_USER',
                                 payload:sinhvien,
                             };
                             this.props.dispatch(action);

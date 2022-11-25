@@ -19,6 +19,11 @@ class ReactForm extends Component {
         valid: false
 
     }
+    componentDidUpdate(prevProps,prevState){
+        if(this.props.arrSinhVien.userEdit && prevProps.arrSinhVien.userEdit !== this.props.arrSinhVien.userEdit){
+            this.setState({values:{...this.props.arrSinhVien.userEdit}})
+        }
+    }
     handleChange = (e) => {
         let { name, value, type, pattern } = e.target;
 
@@ -65,13 +70,14 @@ class ReactForm extends Component {
         }
         this.props.dispatch(action);
     }
-    handleUpdate = () =>{
+    handleUpdate = (e) =>{
+        e.preventDefault();
         let maSV = document.getElementById('maSV').value;
         let soDienThoai = document.getElementById('soDienThoai').value;
         let hoTen = document.getElementById('hoTen').value;
         let email = document.getElementById('email').value;
         const action = {
-            type: 'ADD_USER',
+            type: 'UPDATE_USER',
             payload: { maSV, soDienThoai, hoTen, email }
         }
         this.props.dispatch(action);
@@ -125,19 +131,10 @@ class ReactForm extends Component {
                         </div>
                     </div>
                     <div className="card-footer text-left">
-                        {this.state.valid ? <button className="btn btn-success" type='submit'>Thêm sinh viên</button> : <button className="btn btn-success" type='submit' disabled>Thêm sinh viên</button>}
+                        {this.state.valid ? <button className="btn btn-success mr-2" type='submit'>Thêm sinh viên</button> : <button className="btn btn-success mr-2" type='submit' disabled>Thêm sinh viên</button>}
+                        {this.state.valid ? <button className="btn btn-success" type='submit' onClick={this.handleUpdate}>UPDATE</button> : <button className="btn btn-success" type='submit' disabled>UPDATE</button>}
 
                     </div>
-                    {/* <div className="card-footer text-left">
-                        {this.state.valid ? <button className="btn btn-success" type='submit'  onClick={()=>{
-                                        const action = {
-                                            type: 'EDIT_USER',
-                                            payload: arrSinhVien
-                                        }
-                                        this.props.dispatch(action);
-                        }}>UPDATE</button> : <button className="btn btn-success" type='submit' disabled>UPDATE</button> }
-                    </div> */}
-
                 </form>
             </div>
         )
