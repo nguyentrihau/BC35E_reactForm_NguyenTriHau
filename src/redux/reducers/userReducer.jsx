@@ -14,7 +14,7 @@ const stateDefault ={
         hoTen: 'sadad',
         email: '321@gmail.com',
     },
-    edit:true
+    edit:false
 }
 export const arrSinhVien = (state = stateDefault, action) => {
     switch (action.type) {
@@ -31,7 +31,7 @@ export const arrSinhVien = (state = stateDefault, action) => {
         }
         case 'SELECTED_USER': {
             const newUserSelected = action.payload;
-            return {...state,userEdit:newUserSelected.sinhvien, edit:false}
+            return {...state,userEdit:newUserSelected.sinhvien, edit:true}
         }
         case 'UPDATE_USER':{
             let svArr = [...state.userList]
@@ -40,11 +40,11 @@ export const arrSinhVien = (state = stateDefault, action) => {
               );
               if (index !== -1) {
                 // console.log(index);
-                svArr.splice(index, 1);
-                svArr.push(action.payload);
+                // svArr.splice(index, 1);
+                svArr.splice(index, 1, action.payload);
               }
               console.log("action.payload", action.payload.edit);
-            return {...state,userList:svArr,edit:true}
+            return {...state,userList:svArr,edit:false}
         }
         case 'DELETE_USER':{
             const newUserList = state.userList.filter(e => e.maSV !== action.payload)

@@ -70,7 +70,8 @@ class ReactForm extends Component {
         }
         this.props.dispatch(action);
         this.setState({
-            values:{maSV:"",soDienThoai:"",hoTen:"",email:""}
+            values:{maSV:"",soDienThoai:"",hoTen:"",email:""},
+            valid:false
         })
     }
     handleUpdate = (e) =>{
@@ -86,7 +87,7 @@ class ReactForm extends Component {
         this.props.dispatch(action)
         this.setState({
             values:{maSV:"",soDienThoai:"",hoTen:"",email:""},
-            // valid: false
+            valid: false
         })
     }
     checkValid = () => {
@@ -115,7 +116,7 @@ class ReactForm extends Component {
                             <div className="col-6">
                                 <div className="form-group">
                                     <span>Mã SV</span>
-                                    {this.props.arrSinhVien.edit?<input type="number" id='maSV' name='maSV' className="form-control" value={this.state.values.maSV} onChange={this.handleChange} />:<input type="number" id='maSV' name='maSV' className="form-control" value={this.state.values.maSV} onChange={this.handleChange} disabled/>}
+                                    {!this.props.arrSinhVien.edit?<input type="number" id='maSV' name='maSV' className="form-control" value={this.state.values.maSV} onChange={this.handleChange} />:<input type="number" id='maSV' name='maSV' className="form-control" value={this.state.values.maSV} onChange={this.handleChange} disabled/>}
                                     {this.state.errors.maSV && <div className='alert alert-danger'>{this.state.errors.maSV}</div>}
                                 </div>
                                 <div className="form-group">
@@ -140,7 +141,7 @@ class ReactForm extends Component {
                     </div>
                     <div className="card-footer text-left">
                         {this.state.valid && !this.props.arrSinhVien.edit  ? <button className="btn btn-success mr-2" type='submit'>Thêm sinh viên</button> : <button className="btn btn-success mr-2" type='submit' disabled>Thêm sinh viên</button>}
-                        {this.state.valid && !this.props.arrSinhVien.edit ? <button className="btn btn-success" type='submit' onClick={this.handleUpdate}>UPDATE</button> : <button className="btn btn-success" type='submit' disabled>UPDATE</button>}
+                        {this.state.valid && this.props.arrSinhVien.edit ? <button className="btn btn-success" type='submit' onClick={this.handleUpdate}>UPDATE</button> : <button className="btn btn-success" type='submit' disabled>UPDATE</button>}
 
                     </div>
                 </form>
