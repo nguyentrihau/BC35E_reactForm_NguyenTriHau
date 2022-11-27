@@ -1,3 +1,5 @@
+import { isDisabled } from "@testing-library/user-event/dist/utils";
+
 const stateDefault ={
     userList:[{
         maSV: '1',
@@ -11,7 +13,8 @@ const stateDefault ={
         soDienThoai: '1241324',
         hoTen: 'sadad',
         email: '321@gmail.com',
-    }
+    },
+    edit:true
 }
 export const arrSinhVien = (state = stateDefault, action) => {
     switch (action.type) {
@@ -22,13 +25,13 @@ export const arrSinhVien = (state = stateDefault, action) => {
                 alert('Trùng MaSV');
                 return {...state};
             }
-            updateArr.push(action.payload)
+            updateArr.push(action.payload);
             // state.userList = [...updateArr,action.payload];
             return {...state,userList:updateArr};
         }
         case 'SELECTED_USER': {
             const newUserSelected = action.payload;
-            return {...state,userEdit:newUserSelected}
+            return {...state,userEdit:newUserSelected.sinhvien, edit:false}
         }
         case 'UPDATE_USER':{
             let svArr = [...state.userList]
@@ -40,8 +43,8 @@ export const arrSinhVien = (state = stateDefault, action) => {
                 svArr.splice(index, 1);
                 svArr.push(action.payload);
               }
-              
-            return {...state,userList:svArr}
+              console.log("action.payload", action.payload.edit);
+            return {...state,userList:svArr,edit:true}
         }
         case 'DELETE_USER':{
             const newUserList = state.userList.filter(e => e.maSV !== action.payload)
